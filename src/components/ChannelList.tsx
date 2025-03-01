@@ -19,12 +19,12 @@ const ChannelList: React.FC = () => {
   const micToggleSoundRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    joinSoundRef.current = new Audio('/public/Connect.mp3');
+    joinSoundRef.current = new Audio('/Connect.mp3');
   }, []);
 
   useEffect(() => {
     
-    micToggleSoundRef.current = new Audio('/public/mute.mp3');
+    micToggleSoundRef.current = new Audio('/mute.mp3');
     
     return () => {
       
