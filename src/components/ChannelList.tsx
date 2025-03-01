@@ -4,11 +4,11 @@ import { RootState } from '../store';
 import { setCurrentChannel } from '../store/slices/uiSlice';
 import { toggleMicMute, toggleDeafen } from '../store/slices/usersSlice';
 import { connectToVoiceChannel, disconnectFromVoiceChannel } from '../store/slices/uiSlice';
-import { ChevronDown, Hash, Volume2, Plus, Settings, Headphones, Mic, MicOff, User } from 'lucide-react';
+import { ChevronDown, Hash, Volume2, Plus, Settings, Headphones, Mic, MicOff } from 'lucide-react';
 
 const ChannelList: React.FC = () => {
   const dispatch = useDispatch();
-  const { currentServerId, currentChannelId, connectedToVoice, currentVoiceChannelId } = useSelector((state: RootState) => state.ui);
+  const { currentServerId, currentChannelId, currentVoiceChannelId } = useSelector((state: RootState) => state.ui);
   const { servers } = useSelector((state: RootState) => state.servers);
   const { currentUser, isMicMuted, isDeafened } = useSelector((state: RootState) => state.users);
   
@@ -19,12 +19,12 @@ const ChannelList: React.FC = () => {
   const micToggleSoundRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    joinSoundRef.current = new Audio('/src/assets/sounds/Connect.mp3');
+    joinSoundRef.current = new Audio('/public/Connect.mp3');
   }, []);
 
   useEffect(() => {
     
-    micToggleSoundRef.current = new Audio('/src/assets/sounds/mute.mp3');
+    micToggleSoundRef.current = new Audio('/public/mute.mp3');
     
     return () => {
       
