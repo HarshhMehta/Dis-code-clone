@@ -18,7 +18,7 @@ const VoiceConnectedBar: React.FC = () => {
   
   // Initialize the audio elements when component mounts
   useEffect(() => {
-    disconnectSoundRef.current = new Audio('/public/Disconnect.mp3');
+    disconnectSoundRef.current = new Audio('/Disconnect.mp3');
     micToggleSoundRef.current = new Audio('/public/mute.mp3');
     
     return () => {
