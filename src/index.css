@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.voicediv {
+    bottom: 52px;
+    width: 240px;
+    left: 72px;
+}
