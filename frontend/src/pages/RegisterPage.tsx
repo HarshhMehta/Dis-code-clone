@@ -36,7 +36,7 @@ const RegisterPage: React.FC = () => {
     setError('');
     
     try {
-      const response = await axios.post('http://localhost:5001/api/auth/register', {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/register`, {
         email,
         username,
         displayName,

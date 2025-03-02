@@ -21,7 +21,7 @@ export const checkAuthStatus = createAsyncThunk(
   'auth/checkStatus',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5001/api/auth/me', {
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/me`, {
         withCredentials: true,
       });
       return response.data.user;
@@ -35,7 +35,7 @@ export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      await axios.post('http://localhost:5001api/auth/logout', {}, {
+      await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/logout`, {}, {
         withCredentials: true,
       });
       return null;
