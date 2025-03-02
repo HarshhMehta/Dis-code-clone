@@ -3,7 +3,7 @@ import axios from 'axios';
 import { User } from '../../types';
 
 interface AuthState {
-  user: any;
+  user: User | null;
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
@@ -16,14 +16,18 @@ const initialState: AuthState = {
   error: null,
 };
 
-// Async thunks
+// 🔹 Check Auth Status (Uses Token)
 export const checkAuthStatus = createAsyncThunk(
   'auth/checkStatus',
   async (_, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) return rejectWithValue('No token found');
+
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/me`, {
-        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` },
       });
+
       return response.data.user;
     } catch (error) {
       return rejectWithValue('Not authenticated');
@@ -31,13 +35,16 @@ export const checkAuthStatus = createAsyncThunk(
   }
 );
 
+// 🔹 Logout (Removes Token)
 export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
       await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/logout`, {}, {
-        withCredentials: true,
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
+
+      localStorage.removeItem("token"); // Clear token after logout
       return null;
     } catch (error) {
       return rejectWithValue('Logout failed');
@@ -49,11 +56,12 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
+    loginUser: (state, action: PayloadAction<{ user: User, token: string }>) => {
+      state.user = action.payload.user;
       state.isAuthenticated = true;
       state.loading = false;
       state.error = null;
+      localStorage.setItem("token", action.payload.token); // Store token
     },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
@@ -85,5 +93,4 @@ const authSlice = createSlice({
 });
 
 export const { loginUser, setError, clearError } = authSlice.actions;
-
 export default authSlice.reducer;
