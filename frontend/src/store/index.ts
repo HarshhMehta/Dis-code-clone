@@ -3,6 +3,8 @@ import uiReducer from './slices/uiSlice';
 import serversReducer from './slices/serversSlice';
 import usersReducer from './slices/usersSlice';
 import messagesReducer from './slices/messagesSlice';
+import authReducer from "./slices/authSlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,7 @@ export const store = configureStore({
     servers: serversReducer,
     users: usersReducer,
     messages: messagesReducer,
+    auth: authReducer,
   },
 });
 
